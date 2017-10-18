@@ -3,50 +3,49 @@ let dcuTerminal;
 
 function doPush(pArgs) {
 
-    const path = pArgs.path;
+  const path = pArgs.path;
 
-    if (path) {
-        dcuTerminal.show(true);
+  if (path) {
+    dcuTerminal.show(true);
 
-        dcuTerminal.sendText(`dcu -m "${path}"`);
-        
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Pushing code with DCU.'); 
-    }
-    
+    dcuTerminal.sendText(`dcu -m "${path}"`);
+
+    // Display a message box to the user
+    vscode.window.showInformationMessage('Pushing code with DCU.');
+  }
+
 }
 
 function doGrab() {
-    dcuTerminal.show(true);
-    dcuTerminal.sendText('dcu -g')
+  dcuTerminal.show(true);
+  dcuTerminal.sendText('dcu -g')
 
-    vscode.window.showInformationMessage('Grabbing code with DCU.'); 
+  vscode.window.showInformationMessage('Grabbing code with DCU.');
 }
 
 function activate(context) {
 
-    dcuTerminal = vscode.window.createTerminal('DCU Output')
+  dcuTerminal = vscode.window.createTerminal('DCU Output')
 
-    let pushCommand = vscode.commands.registerCommand('extension.doPush', function (pArgs) {
-        // The code you place here will be executed every time your command is executed
+  let pushCommand = vscode.commands.registerCommand('extension.doPush', function (pArgs) {
+    // The code you place here will be executed every time your command is executed
 
-        if (pArgs) {
-            doPush(pArgs);    
-        }
-    });
+    if (pArgs) {
+      doPush(pArgs);
+    }
+  });
 
-    context.subscriptions.push(pushCommand);
+  context.subscriptions.push(pushCommand);
 
-    let grabCommand = vscode.commands.registerCommand('extension.doGrab', function() {
-        doGrab();
-    });
+  let grabCommand = vscode.commands.registerCommand('extension.doGrab', function () {
+    doGrab();
+  });
 
-    context.subscriptions.push(grabCommand);
+  context.subscriptions.push(grabCommand);
 }
 
 exports.activate = activate;
 
 // this method is called when your extension is deactivated
-function deactivate() {
-}
+function deactivate() {}
 exports.deactivate = deactivate;

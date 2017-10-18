@@ -1,51 +1,53 @@
 {
-    "name": "vsc-occ",
-    "displayName": "vsc-occ",
-    "description": "OCC DCU Integration for VS Code.",
-    "version": "0.0.1",
-    "publisher": "Oracle",
-    "engines": {
-        "vscode": "^1.17.0"
-    },
-    "categories": [
-        "Other"
+  "name": "vsc-occ",
+  "displayName": "vsc-occ",
+  "description": "OCC DCU Integration for VS Code.",
+  "version": "0.0.1",
+  "publisher": "Oracle",
+  "engines": {
+    "vscode": "^1.17.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/.ccc/*"
+  ],
+  "main": "./extension",
+  "contributes": {
+    "commands": [{
+        "command": "extension.doPush",
+        "title": "DCU Push"
+      },
+      {
+        "command": "extension.doGrab",
+        "title": "DCU Grab"
+      }
     ],
-    "activationEvents": [
-        "workspaceContains:**/.ccc/*"
-    ],
-    "main": "./extension",
-    "contributes": {
-        "commands": [{
-            "command": "extension.doPush",
-            "title": "DCU Push"
+    "menus": {
+      "explorer/context": [{
+          "command": "extension.doPush",
+          "title": "DCU Push",
+          "group": "DCU"
         },
         {
-            "command": "extension.doGrab",
-            "title": "DCU Grab"
-        }],
-        "menus": {
-            "explorer/context": [{
-                "command": "extension.doPush",
-                "title": "DCU Push",
-                "group": "DCU"
-            },
-            {
-                "command": "extension.doGrab",
-                "title": "DCU Grab",
-                "group": "DCU"
-            }]
+          "command": "extension.doGrab",
+          "title": "DCU Grab",
+          "group": "DCU"
         }
-    },
-    "scripts": {
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.5.2",
-        "vscode": "^1.1.5",
-        "mocha": "^3.5.0",
-        "eslint": "^4.6.1",
-        "@types/node": "^7.0.0",
-        "@types/mocha": "^2.2.42"
+      ]
     }
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.5.2",
+    "vscode": "^1.1.5",
+    "mocha": "^3.5.0",
+    "eslint": "^4.6.1",
+    "@types/node": "^7.0.0",
+    "@types/mocha": "^2.2.42"
+  }
 }

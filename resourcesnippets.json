@@ -1,0 +1,11 @@
+{
+  "OCC Widget Resources": {
+      "prefix":"resources",
+      "body":[
+          "{",
+          "  \"reousrces\":{",
+          "  }",
+          "}"
+      ]
+  }
+}

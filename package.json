@@ -26,6 +26,10 @@
       {
         "command": "extension.createWidget",
         "title": "CCW Create Widget"
+      },
+      {
+        "command": "extension.openNode",
+        "title": "Open OCC"
       }
     ],
     "menus": {
@@ -55,6 +59,14 @@
       {
         "language": "html",
         "path": "./templatesnippets.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./jssnippets.json"
+      },
+      {
+        "language": "json",
+        "path": "./resourcesnippets.json"
       }
     ],
     "configuration": {

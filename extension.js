@@ -20,6 +20,10 @@ function getNode() {
   return node;
 }
 
+function openNode() {
+  vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(getNode()));
+}
+
 function createStatusBar() {
 
   const node = getNode();
@@ -27,7 +31,8 @@ function createStatusBar() {
   const status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 210);
   status.text = "OCC";
   status.tooltip = "OCC Devtools Active - Connected to " + node;
-
+  status.command = "extension.openNode";
+  
   const grab = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 209);
   grab.text = "$(cloud-download)";
   grab.tooltip = "DCU Grab";
@@ -58,19 +63,22 @@ function doPush(pArgs) {
   const path = pArgs.path;
 
   if (path) {
-    dcuTerminal.show();
-
-    const stats = fs.lstatSync(path);
-
-    if (stats.isDirectory()) {
-      dcuTerminal.sendText(`dcu -m "${path}"`);
+    if (path.indexOf(vscode.workspace.rootPath) > -1){
+      dcuTerminal.show();
+      
+      const stats = fs.lstatSync(path);
+  
+      if (stats.isDirectory()) {
+        dcuTerminal.sendText(`dcu -m "${path}"`);
+      }
+      else if (stats.isFile()) {
+        dcuTerminal.sendText(`dcu -t "${path}"`);
+      }
+  
+      // Display a message box to the user
+      vscode.window.setStatusBarMessage("Pushing code with DCU.", 5000);
     }
-    else if (stats.isFile()) {
-      dcuTerminal.sendText(`dcu -t "${path}"`);
-    }
-
-    // Display a message box to the user
-    vscode.window.setStatusBarMessage("Pushing code with DCU.", 5000);
+   
   }
 
 }
@@ -136,14 +144,22 @@ function activate(context) {
 
   context.subscriptions.push(createWidgetCommand);
 
+  let openNodeCommand = vscode.commands.registerCommand('extension.openNode', function() {
+    openNode();
+  });
+
+  context.subscriptions.push(openNodeCommand);
+
   createStatusBar();
 
+  pushOnSave = vscode.workspace.getConfiguration("occ").get('pushOnSave');
+
   vscode.workspace.onDidChangeConfiguration(function() {
-    pushOnSave = vscode.workspace.getConfiguration("occ.pushOnSave");
+    pushOnSave = vscode.workspace.getConfiguration("occ").get('pushOnSave');
   });
 
   vscode.workspace.onDidSaveTextDocument(function(doc) {
-    if (pushOnSave) {
+    if (pushOnSave == true) {
       doPush({ path: doc.fileName });
     }
   });

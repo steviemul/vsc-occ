@@ -5,6 +5,15 @@
             "<span data-bind=\"widgetLocaleText: {value:'${1:resourceKey}', attr:'${2:altText}'\"></span>"
         ]
     },
+    "OCC Widget": {
+        "prefix":"widget",
+        "body":[
+            "<!-- ko if: loaded -->",
+            "  <div class=\"templateRegion\" id=\"${1:my-widget}\" data-oc-id=\"${2:my-widget}\">",
+            "  </div>",
+            "<!-- /ko -->"
+        ]
+    },
     "KO With": {
         "prefix":"with",
         "body": [

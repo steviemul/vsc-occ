@@ -1,0 +1,16 @@
+{
+    "CCi18n Binding": {
+        "prefix":"i18n",
+        "body": [
+            "<span data-bind=\"widgetLocaleText: {value:'${1:resourceKey}', attr:'${2:altText}'\"></span>"
+        ]
+    },
+    "KO With": {
+        "prefix":"with",
+        "body": [
+            "<!-- ko with: ${1:item} -->",
+            "  <span></span>",
+            "<!-- /ko -->"
+        ]
+    }
+}

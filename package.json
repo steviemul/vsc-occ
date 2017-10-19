@@ -22,6 +22,10 @@
       {
         "command": "extension.doGrab",
         "title": "DCU Grab"
+      },
+      {
+        "command": "extension.createWidget",
+        "title": "CCW Create Widget"
       }
     ],
     "menus": {
@@ -34,8 +38,40 @@
           "command": "extension.doGrab",
           "title": "DCU Grab",
           "group": "DCU"
+        },
+        {
+          "command": "extension.createWidget",
+          "title": "CCW Create Widget",
+          "group": "DCU"
         }
-      ]
+      ],
+      "editor/context": [{
+        "command": "extension.doPush",
+        "title": "DCU Push",
+        "group": "DCU"
+      }]
+    },
+    "snippets": [
+      {
+        "language": "html",
+        "path": "./templatesnippets.json"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "OCC Devtools Configuration",
+      "properties": {
+        "occ": {
+          "type": "object",
+          "description": "Devtools settings",
+          "properties": {
+            "pushOnSave": {
+              "type":"boolean",
+              "description":"Automatically push files on save"
+            }
+          }
+        }
+      }
     }
   },
   "scripts": {

@@ -1,37 +1,124 @@
 const vscode = require('vscode');
-let dcuTerminal;
+const fs = require('fs');
+
+let dcuTerminal, ccwTerminal, pushOnSave = false;
+
+function getNode() {
+
+  const path = vscode.workspace.rootPath + '/.ccc/config.json';
+  let node = 'Not Connected';
+
+  try {
+    const config = require(path);
+
+    node = config.node;
+  }
+  catch (e) {
+    console.error(e);
+  }
+
+  return node;
+}
+
+function createStatusBar() {
+
+  const node = getNode();
+
+  const status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 210);
+  status.text = "OCC";
+  status.tooltip = "OCC Devtools Active - Connected to " + node;
+
+  const grab = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 209);
+  grab.text = "$(cloud-download)";
+  grab.tooltip = "DCU Grab";
+  grab.command = "extension.doGrab";
+  
+  const push = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 208);
+  push.text = "$(cloud-upload)";
+  push.tooltip = "DCU Push Current File";
+  push.command = "extension.doPush";
+
+  const create = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 207);
+  create.text = "$(file-code)";;
+  create.tooltip = "CCW Create Widget";
+  create.command = "extension.createWidget";
+
+  status.show();
+  grab.show();
+  push.show();
+  create.show();
+}
 
 function doPush(pArgs) {
+
+  if (!dcuTerminal) {
+    dcuTerminal = vscode.window.createTerminal('DCU Output');
+  }
 
   const path = pArgs.path;
 
   if (path) {
-    dcuTerminal.show(true);
+    dcuTerminal.show();
 
-    dcuTerminal.sendText(`dcu -m "${path}"`);
+    const stats = fs.lstatSync(path);
+
+    if (stats.isDirectory()) {
+      dcuTerminal.sendText(`dcu -m "${path}"`);
+    }
+    else if (stats.isFile()) {
+      dcuTerminal.sendText(`dcu -t "${path}"`);
+    }
 
     // Display a message box to the user
-    vscode.window.showInformationMessage('Pushing code with DCU.');
+    vscode.window.setStatusBarMessage("Pushing code with DCU.", 5000);
   }
 
 }
 
 function doGrab() {
-  dcuTerminal.show(true);
+
+  if (!dcuTerminal) {
+    dcuTerminal = vscode.window.createTerminal('DCU Output');
+  }
+
+  dcuTerminal.show();
   dcuTerminal.sendText('dcu -g')
 
-  vscode.window.showInformationMessage('Grabbing code with DCU.');
+  vscode.window.setStatusBarMessage("Grabbing code with DCU.", 5000);
+}
+
+function createWidget() {
+
+  if (!ccwTerminal) {
+    ccwTerminal = vscode.window.createTerminal('CCW Output');
+  }
+
+  ccwTerminal.show();
+  ccwTerminal.sendText('ccw -w');
 }
 
 function activate(context) {
-
-  dcuTerminal = vscode.window.createTerminal('DCU Output')
-
+  
   let pushCommand = vscode.commands.registerCommand('extension.doPush', function (pArgs) {
-    // The code you place here will be executed every time your command is executed
-
     if (pArgs) {
       doPush(pArgs);
+    }
+    else {
+      const activeEditor = vscode.window.activeTextEditor;
+
+      if (activeEditor) {
+        const activeDoc = activeEditor.document;
+
+        if (activeDoc) {
+          doPush({
+            path: activeDoc.fileName
+          });
+        }
+      }
+      else {
+        vscode.window.showWarningMessage("No file selected, please open a file or use this command from the explorer context menu.");
+      }
+      
     }
   });
 
@@ -42,10 +129,29 @@ function activate(context) {
   });
 
   context.subscriptions.push(grabCommand);
+
+  let createWidgetCommand = vscode.commands.registerCommand('extension.createWidget', function() {
+    createWidget();
+  });
+
+  context.subscriptions.push(createWidgetCommand);
+
+  createStatusBar();
+
+  vscode.workspace.onDidChangeConfiguration(function() {
+    pushOnSave = vscode.workspace.getConfiguration("occ.pushOnSave");
+  });
+
+  vscode.workspace.onDidSaveTextDocument(function(doc) {
+    if (pushOnSave) {
+      doPush({ path: doc.fileName });
+    }
+  });
 }
 
 exports.activate = activate;
 
 // this method is called when your extension is deactivated
 function deactivate() {}
+
 exports.deactivate = deactivate;

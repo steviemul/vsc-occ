@@ -3,7 +3,8 @@
       "prefix":"resources",
       "body":[
           "{",
-          "  \"reousrces\":{",
+          "  \"resources\":{",
+          "    \"${1:resourceKey}\":\"${2:resourceValue}\"",
           "  }",
           "}"
       ]

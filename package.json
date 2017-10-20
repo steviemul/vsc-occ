@@ -58,15 +58,15 @@
     "snippets": [
       {
         "language": "html",
-        "path": "./templatesnippets.json"
+        "path": "./snippets/templatesnippets.json"
       },
       {
         "language": "javascript",
-        "path": "./jssnippets.json"
+        "path": "./snippets/jssnippets.json"
       },
       {
         "language": "json",
-        "path": "./resourcesnippets.json"
+        "path": "./snippets/resourcesnippets.json"
       }
     ],
     "configuration": {

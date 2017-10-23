@@ -64,7 +64,7 @@ function doPush(pArgs) {
 
   if (path) {
     if (path.indexOf(vscode.workspace.rootPath) > -1){
-      dcuTerminal.show();
+      dcuTerminal.show(true);
       
       const stats = fs.lstatSync(path);
   
@@ -76,7 +76,7 @@ function doPush(pArgs) {
       }
   
       // Display a message box to the user
-      vscode.window.setStatusBarMessage("Pushing code with DCU.", 5000);
+      vscode.window.setStatusBarMessage("Pushing code with DCU.", 3000);
     }
    
   }
@@ -89,8 +89,8 @@ function doGrab() {
     dcuTerminal = vscode.window.createTerminal('DCU Output');
   }
 
-  dcuTerminal.show();
-  dcuTerminal.sendText('dcu -g')
+  dcuTerminal.show(true);
+  dcuTerminal.sendText('dcu -g');
 
   vscode.window.setStatusBarMessage("Grabbing code with DCU.", 5000);
 }

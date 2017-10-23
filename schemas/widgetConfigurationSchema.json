@@ -1,0 +1,744 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Configuration",
+    "description": "Cloud Commerce Configuration",
+    "type": "object",
+    "properties": {
+        "widgetDescriptorName": {
+            "type": "string"
+        },
+        "id": {
+            "type": "string"
+        },
+        "enabled": {
+            "type": "boolean"
+        },
+        "titleResourceId": {
+            "type": "string"
+        },
+        "descriptionResourceId": {
+            "type": "string"
+        },
+        "configType": {
+            "enum": [
+                "general",
+                "payment",
+                "integrations"
+            ]
+        },
+        "properties": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/booleanType"
+                    },
+                    {
+                        "$ref": "#/definitions/optionType"
+                    },
+                    {
+                        "$ref": "#/definitions/multiSelectOptionType"
+                    },
+                    {
+                        "$ref": "#/definitions/multiPropertiesType"
+                    },
+                    {
+                        "$ref": "#/definitions/sectionTitleType"
+                    },
+                    {
+                        "$ref": "#/definitions/stringType"
+                    },
+                    {
+                        "$ref": "#/definitions/countryPickerType"
+                    },
+                    {
+                        "$ref": "#/definitions/passwordType"
+                    },
+                    {
+                        "$ref": "#/definitions/mediaType"
+                    },
+                    {
+                        "$ref": "#/definitions/collectionType"
+                    },
+                    {
+                        "$ref": "#/definitions/audienceType"
+                    },
+                    {
+                        "$ref": "#/definitions/select2Type"
+                    }
+                ]
+            }
+        },
+        "instances": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/configInstance"
+                    }
+                ]
+            }
+        },
+        "enableSiteSpecific": {
+            "type": "boolean"
+        }
+    },
+    "definitions": {
+        "configItemOption": {
+            "id": "configItemOption",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "value"
+            ]
+        },
+        "configInstance": {
+            "id": "configInstance",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "instanceName": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "instanceName"
+            ]
+        },
+        "sectionTitleType": {
+            "id": "sectionTitleType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "sectionTitleType"
+                    ]
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type",
+                "labelResourceId"
+            ]
+        },
+        "stringType": {
+            "id": "stringType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "stringType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "defaultValue": {
+                    "type": "string"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "public": {
+                    "type": "boolean"
+                },
+                "maxLength": {
+                    "type": "integer"
+                },
+                "minLength": {
+                    "type": "integer"
+                },
+                "pattern": {
+                    "type": "string",
+                    "description": "Regular expression for validation"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "numberType": {
+            "id": "numberType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "numberType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "defaultValue": {
+                    "type": "number"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "public": {
+                    "type": "boolean"
+                },
+                "minimum": {
+                    "type": "integer"
+                },
+                "maximum": {
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "optionType": {
+            "id": "optionType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "optionType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "defaultValue": {
+                    "type": "string"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "public": {
+                    "type": "boolean"
+                },
+                "options": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "string"
+                            },
+                            "labelResourceId": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "value"
+                        ]
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type",
+                "options"
+            ]
+        },
+        "multiSelectOptionType": {
+            "id": "multiSelectOptionType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "multiSelectOptionType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "defaultValue": {
+                    "type": "string"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "displayAsCheckboxes": {
+                    "type": "boolean"
+                },
+                "public": {
+                    "type": "boolean"
+                },
+                "options": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "string"
+                            },
+                            "labelResourceId": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "value"
+                        ]
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type",
+                "options"
+            ]
+        },
+        "multiPropertiesType": {
+            "id": "multiPropertiesType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "multiPropertiesType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "defaultValue": {
+                    "type": "string"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "public": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "countryPickerType": {
+            "id": "multiCountriesType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "countryPickerType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "public": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "booleanType": {
+            "id": "booleanType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "booleanType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "defaultValue": {
+                    "type": "boolean"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "public": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type",
+                "defaultValue"
+            ]
+        },
+        "passwordType": {
+            "id": "passwordType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "passwordType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "defaultValue": {
+                    "type": "string"
+                },
+                "maxLength": {
+                    "type": "integer"
+                },
+                "minLength": {
+                    "type": "integer"
+                },
+                "pattern": {
+                    "type": "string",
+                    "description": "Regular expression for validation"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "public": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "mediaType": {
+            "id": "mediaType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "mediaType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "defaultValue": {
+                    "type": "string"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "collectionType": {
+            "id": "collectionType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "collectionType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "defaultValue": {
+                    "type": "string"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "maxLength": {
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "select2Type": {
+            "id": "select2Type",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "select2Type"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "defaultValue": {
+                    "type": "string"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "dataKey": {
+                    "type": "string"
+                },
+                "public": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "audienceType": {
+            "id": "audienceType",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "audienceType"
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "helpTextResourceId": {
+                    "type": "string"
+                },
+                "labelResourceId": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "defaultValue": {
+                    "type": "string"
+                },
+                "displayOnInstances": {
+                    "type": "string"
+                },
+                "maxLength": {
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "configItem": {
+            "id": "configItem",
+            "type": "object",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/booleanType"
+                },
+                {
+                    "$ref": "#/definitions/optionType"
+                },
+                {
+                    "$ref": "#/definitions/multiSelectOptionType"
+                },
+                {
+                    "$ref": "#/definitions/multiPropertiesType"
+                },
+                {
+                    "$ref": "#/definitions/countryPickerType"
+                },
+                {
+                    "$ref": "#/definitions/sectionTitleType"
+                },
+                {
+                    "$ref": "#/definitions/stringType"
+                },
+                {
+                    "$ref": "#/definitions/passwordType"
+                },
+                {
+                    "$ref": "#/definitions/mediaType"
+                },
+                {
+                    "$ref": "#/definitions/collectionType"
+                },
+                {
+                    "$ref": "#/definitions/audienceType"
+                },
+                {
+                    "$ref": "#/definitions/select2Type"
+                }
+            ]
+        }
+    }
+}

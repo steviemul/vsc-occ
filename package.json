@@ -69,6 +69,12 @@
         "path": "./snippets/resourcesnippets.json"
       }
     ],
+    "jsonValidation": [
+      {
+        "fileMatch": "configMetadata.json",
+        "url": "./schemas/widgetConfigurationSchema.json"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "OCC Devtools Configuration",

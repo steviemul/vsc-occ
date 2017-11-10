@@ -20,13 +20,13 @@ function getNode() {
   return node;
 }
 
+const node = getNode();
+
 function openNode() {
   vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(getNode()));
 }
 
 function createStatusBar() {
-
-  const node = getNode();
 
   const status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 210);
   status.text = "OCC";
@@ -69,10 +69,10 @@ function doPush(pArgs) {
       const stats = fs.lstatSync(path);
   
       if (stats.isDirectory()) {
-        dcuTerminal.sendText(`dcu -m "${path}"`);
+        dcuTerminal.sendText(`dcu -n ${node} -m "${path}"`);
       }
       else if (stats.isFile()) {
-        dcuTerminal.sendText(`dcu -t "${path}"`);
+        dcuTerminal.sendText(`dcu -n ${node} -t "${path}"`);
       }
   
       // Display a message box to the user
@@ -90,7 +90,7 @@ function doGrab() {
   }
 
   dcuTerminal.show(true);
-  dcuTerminal.sendText('dcu -g');
+  dcuTerminal.sendText(`dcu -n ${node} -g`);
 
   vscode.window.setStatusBarMessage("Grabbing code with DCU.", 5000);
 }
@@ -102,7 +102,7 @@ function createWidget() {
   }
 
   ccwTerminal.show();
-  ccwTerminal.sendText('ccw -w');
+  ccwTerminal.sendText(`ccw -n ${node} -w`);
 }
 
 function activate(context) {

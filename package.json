@@ -90,7 +90,18 @@
           }
         }
       }
-    }
+    },
+    "languages": [
+      {
+        "id": "html",
+        "extensions": [
+          ".template"
+        ],
+        "aliases": [
+          "html"
+        ]
+      }
+    ]
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",

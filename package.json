@@ -73,6 +73,10 @@
       {
         "fileMatch": "configMetadata.json",
         "url": "./schemas/widgetConfigurationSchema.json"
+      },
+      {
+        "fileMatch": "package.json",
+        "url":"./schemas/occPackageSchema.json"
       }
     ],
     "configuration": {

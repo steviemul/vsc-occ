@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "Package Metadata",
+  "description": "OCC Package metadata",
+  "type": "object",
+  "definitions": {
+    "initializers": {
+      
+    }
+  }
+}
